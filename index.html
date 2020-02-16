@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Getting started with R   R-Ladies Berlin</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Lisa Hehnke   @DataPlanes" />
+    <meta name="date" content="2020-02-18" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# <font size='9'>Getting started with R</font> <br> <font size='6'>R-Ladies Berlin</font>
+### <font size='5'>Lisa Hehnke <br> <span class="citation">@DataPlanes</span></font>
+### <font size='6'>February 18, 2020</font>
+
+---
+
+
+
+
+
+
+class: center, middle
+
+## &lt;font size='6'&gt;"R is a big part of who I am. I'm very involved in the R community. R is the thing I'm most passionate about."&lt;/font&gt; &lt;br&gt; &lt;font size='5'&gt;Gabriela de Queiroz, Founder of R-Ladies&lt;/font&gt;
+
+&lt;img src="images/gabriela.png" width="250px" style="display: block; margin: auto;" /&gt;
+
+???
+
+Image credit: [https://k-roz.com/about/](https://k-roz.com/about/)
+
+
+---
+class: inverse, center, middle
+
+# Start with WHY
+
+---
+
+## "Why should I learn R? Isn't it yet another programming language?"
+
+--
+
+1. Supportive, diverse, and inclusive community (one word: [DataCamp 👏](https://www.buzzfeednews.com/article/daveyalba/datacamp-sexual-harassment-metoo-tech-startup))
+
+--
+
+2. Free and open source software with &gt;15k packages on CRAN
+
+--
+
+3. Extensive documentation and community support
+
+--
+
+4. Go-to programming language for statistical analysis and data visualization
+
+--
+
+5. Widely used in academia (no 💴), data-driven journalism (also no 💵), and the industry (💰)
+
+--
+
+6. Why I *personally* love R: Learning how to fail, finding out why (thanks to Google and Stack Overflow), trying again, failing better, learning from this experience (aka learning what to Google next time), and eventually having a moment of instant gratification when the code runs through (or not) 🙏
+
+
+---
+class: inverse, center, middle
+
+# HOW
+
+---
+
+## How do you use R?
+
+It's pretty simple:
+
+--
+
+.center[
+![](https://media1.tenor.com/images/72bf7922ac0b07b2f7f8f630e4ae01d2/tenor.gif?itemid=11364811)
+]
+
+
+
+---
+
+## But before you can start typing R code, you have to install the software first.
+
++ Download **R**: [https://cran.r-project.org/](https://cran.r-project.org/)
+
++ Download **RStudio**: [https://rstudio.com/products/rstudio/](https://rstudio.com/products/rstudio/)
+
+
+---
+
+## This is what RStudio looks like:
+
+&lt;img src="images/RStudio.png" width="960" style="display: block; margin: auto;" /&gt;
+
+
+---
+class: inverse, center, middle
+
+# It's your turn to install the software. &lt;br&gt; If you already did it, please help others who aren't there yet!
+
+
+---
+
+## Now that you have the prerequisites, let's continue with the extras: packages!
+
+
+```r
+# Install {swirl} package
+install.packages('swirl')
+
+# See which packages are already installed
+library()
+
+# Load the {swirl} package
+library(swirl)
+
+# Need help?
+help(swirl)
+```
+
+---
+
+## "Do I have to type this every time? That's a lot of code..."
+
+In short: no. You can use so-called *R scripts* to store (and rerun) your code: 
+
+*File -&gt; New File -&gt; R Script (or Ctrl + Shift + N)*
+
+&lt;img src="images/new_script.png" width="600px" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Please try it youRself:
+
+Open a new R script, type the solutions to the exercises below, and run it. 
+
+If you don't know how to do it, that's perfectly fine! We'll find out together.
+
+
+1. Add 2 + 2 in R.
+
+2. Try to calculate the square root of 16 (hint: *?sqrt*).
+
+3. Install and load the 'tidyverse' package collection (trust me, you'll need it!).
+
+4. Try to assign the result of 2 + 2 to a new variable named x (hint: *&lt;-*).
+
+--
+
+###.center[**Did it work?**]
+
+
+---
+
+## Here's the solution:
+
+
+```r
+# Add 2 + 2.
+2 + 2
+
+# Calculate the square root of 16.
+sqrt(16)
+
+# Install and load the {tidyverse}
+install.packages('tidyverse')
+library(tidyverse)
+
+# Assign the result of 2 + 2 to a new variable named x
+x &lt;- 2 + 2
+```
+
+
+---
+class: inverse, center, middle
+
+# Congratulations, you also achieved the WHAT: &lt;br&gt; You wrote and executed your first R code! 🏅
+
+
+---
+class: inverse, center, middle
+
+# Now on to the fun stuff: Twitter data!
+
+
+---
+
+# We're using {rtweet} to download some tweets.
+
+First, we install and load the {rtweet} package.
+
+
+```r
+# Install the {rtweet} package
+install.packages('rtweet')
+
+# Load the package
+library(rtweet)
+```
+
+--
+
+Next, we download our data. Choose whichever option you like best:
+
+
+```r
+# A: Search for 1k tweets using the rstats hashtag (w/o retweets)
+data_raw &lt;- search_tweets('#rstats', n = 1000, include_rts = FALSE)
+
+# B: Get the most recent 1k tweets posted by R-Ladies Global
+data_raw &lt;- get_timeline('rladiesglobal', n = 1000)
+
+# C: Get the 1k most recently favorited statuses by Hadley Wickham
+data_raw &lt;- get_favorites('hadleywickham', n = 1000)
+```
+
+
+---
+
+## (Yes, *that's* Hadley Wickham.)
+
+.center[
+![](https://media1.tenor.com/images/72bf7922ac0b07b2f7f8f630e4ae01d2/tenor.gif?itemid=11364811)
+]
+
+
+---
+
+# First things first: data wrangling.
+
+Let's do the following steps together.
+
+
+```r
+# Get a glimpse of the data
+glimpse(data_raw)
+
+# Select the variables containing the user handle, 
+# date, text, and number of favorites
+data_subset &lt;- data_raw %&gt;%
+  select(screen_name, created_at, text, favorite_count)
+
+# Show all tweets with more than 100 favorites and 
+# assign the results to a new variable
+data_subset %&gt;%
+  filter(favorite_count &gt; 100)
+```
+
+
+---
+
+# And now some basic analyses...
+
+
+```r
+# Summary statistics
+data_subset %&gt;%
+  summary()
+
+# Summary stats using {skimr}
+install.packages('skimr')
+library(skimr)
+
+data_subset %&gt;%
+  skim()
+```
+
+
+---
+
+# ...and visualizations.
+
+
+```r
+## TODO: ADD.
+```
+
+---
+class: center, middle
+
+# Thanks for listening and happy coding!
+
+Slides made with ❤️ and R [*xaringan*](https://github.com/yihui/xaringan).
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
