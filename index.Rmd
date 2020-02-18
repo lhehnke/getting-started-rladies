@@ -71,6 +71,38 @@ class: inverse, center, middle
 
 
 ---
+
+## Some example projects: [#tidytuesday](https://github.com/rfordatascience/tidytuesday) data viz
+
+```{r, fig.align="center", echo=FALSE, out.width = "600px"}
+knitr::include_graphics("images/schooldiversity.png")
+```
+
+.center[[Cédric Scherer | @CedScherer](https://cedricscherer.netlify.com/top/dataviz/)]
+
+
+---
+
+## Some more example projects: trashy animations
+
+```{r, fig.align="center", echo=FALSE, out.width = "600px"}
+knitr::include_graphics("images/trash_emoji.gif")
+```
+
+.center[[Lisa Reiber & Indra Patil | @lisa_reiber & @patilindrajeets](https://github.com/TripLLL/weRnuts3)]
+
+
+---
+
+## Even more example projects: killR interactive dashboard
+
+```{r, fig.align="center", echo=FALSE}
+knitr::include_graphics("images/dashboard.png")
+```
+
+.center[[Me (sneaky self promo)](https://www.dataplanes.org/project-killR/)]
+
+---
 class: inverse, center, middle
 
 # HOW
@@ -99,18 +131,18 @@ It's pretty simple:
 
 
 ---
+class: inverse, center, middle
+
+# It's your turn to install the software. <br> If you already did, please help others who aren't there yet!
+
+
+---
 
 ## This is what RStudio looks like:
 
 ```{r, fig.align="center", echo=FALSE}
 knitr::include_graphics("images/RStudio.png")
 ```
-
-
----
-class: inverse, center, middle
-
-# It's your turn to install the software. <br> If you already did it, please help others who aren't there yet!
 
 
 ---
@@ -151,12 +183,13 @@ Open a new R script, type the solutions to the exercises below, and run it.
 
 If you don't know how to do it (yet), that's perfectly normal! We'll find out together.
 
+--
 
 1. Add 2 + 2 in R.
 
-2. Try to calculate the square root of 16 (hint: *?sqrt*).
+2. Print *"Hello, R-Ladies Berlin!"* to the console (hint: *?print*).
 
-3. Install and load the 'tidyverse' package collection (trust me, you'll need it!).
+3. Install and load the {tidyverse} package collection (trust me, you'll need it!).
 
 4. Try to assign the result of 2 + 2 to a new variable named x (hint: *<-*).
 
@@ -174,7 +207,7 @@ If you don't know how to do it (yet), that's perfectly normal! We'll find out to
 2 + 2
 
 # Calculate the square root of 16.
-sqrt(16)
+print("Hello, R-Ladies Berlin!")
 
 # Install and load the {tidyverse}
 install.packages('tidyverse')
@@ -199,7 +232,16 @@ class: inverse, center, middle
 
 ---
 
-# We're using {rtweet} to download some tweets.
+## For the next steps, you need your own Twitter account.
+
+```{r, fig.align="center", echo=FALSE}
+knitr::include_graphics("images/twitter.png")
+```
+
+
+---
+
+## We're using {rtweet} to download some tweets.
 
 First, we install and load the {rtweet} package.
 
@@ -238,7 +280,7 @@ data_raw <- get_favorites('hadleywickham', n = 1000)
 
 ---
 
-# First things first: data wrangling
+## First things first: data wrangling
 
 Let's do the following steps together.
 
@@ -249,7 +291,8 @@ glimpse(data_raw)
 # Select the variables containing the user handle, 
 # date, text, and number of favorites
 data_subset <- data_raw %>%
-  select(screen_name, created_at, text, favorite_count)
+  select(screen_name, created_at, text, 
+         favorite_count, retweet_count)
 
 # Show all tweets with more than 100 favorites and 
 # assign the results to a new variable
@@ -260,7 +303,7 @@ data_subset %>%
 
 ---
 
-# And now some basic analyses...
+## And now some basic stats...
 
 ```{r, paged.print=FALSE, eval=FALSE}
 # Summary statistics
@@ -278,13 +321,40 @@ data_subset %>%
 
 ---
 
-# ...and visualizations.
+## ...and visualizations...
 
 ```{r, paged.print=FALSE, eval=FALSE}
-
-## TODO: ADD.
-
+# Plot number of tweets over time using {ggplot2}
+data_subset %>% ggplot() + geom_histogram(aes(x = created_at)) +
+xlab("Date") + ylab("Number of tweets") +
+ggtitle("Tweets over time") + theme_minimal()
 ```
+
+
+---
+
+## ...and fancier visualizations.
+
+```{r, paged.print=FALSE, eval=FALSE}
+# Install and load the {tidytext} package
+install.packages("tidytext")
+library(tidytext)
+
+# Install and load the {wordcloud} package
+install.packages("wordcloud")
+library(wordcloud)
+
+# Clean tweets using {tidytext}
+tweets_tidy <- data_subset %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words) %>%
+  count(word)
+
+# Plot wordcloud using {wordcloud} (base R style)
+wordcloud(tweets_tidy$word, tweets_tidy$n, colors = "#88398a", 
+          min.freq = 5, max.words = 200)
+```
+
 
 ---
 class: center, middle
