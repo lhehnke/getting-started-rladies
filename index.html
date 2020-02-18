@@ -60,7 +60,7 @@ class: inverse, center, middle
 
 --
 
-5. Widely used in academia (no 💱), data-driven journalism (also no 💹), and the industry (🤑)
+5. Widely used in academia (no 💵), data-driven journalism (also no 💴), and the industry (💵)
 
 --
 
@@ -317,9 +317,10 @@ data_subset %&gt;%
 
 ```r
 # Plot number of tweets over time using {ggplot2}
-data_subset %&gt;% ggplot() + geom_histogram(aes(x = created_at)) +
-xlab("Date") + ylab("Number of tweets") +
-ggtitle("Tweets over time") + theme_minimal()
+data_subset %&gt;% 
+  ggplot() + geom_histogram(aes(x = created_at)) +
+  xlab("Date") + ylab("Number of tweets") +
+  ggtitle("Tweets over time") + theme_minimal()
 ```
 
 
