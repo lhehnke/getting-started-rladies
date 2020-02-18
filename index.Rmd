@@ -289,13 +289,13 @@ Let's do the following steps together.
 glimpse(data_raw)
 
 # Select the variables containing the user handle, 
-# date, text, and number of favorites
+# date, text, and number of favorites and assign
+# the result to a new variable named data_subset
 data_subset <- data_raw %>%
   select(screen_name, created_at, text, 
          favorite_count, retweet_count)
 
-# Show all tweets with more than 100 favorites and 
-# assign the results to a new variable
+# Show all tweets with more than 100 favorites
 data_subset %>%
   filter(favorite_count > 100)
 ```

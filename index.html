@@ -60,7 +60,7 @@ class: inverse, center, middle
 
 --
 
-5. Widely used in academia (no 💹), data-driven journalism (also no 💵), and the industry (💵)
+5. Widely used in academia (no 💱), data-driven journalism (also no 💹), and the industry (🤑)
 
 --
 
@@ -279,13 +279,13 @@ Let's do the following steps together.
 glimpse(data_raw)
 
 # Select the variables containing the user handle, 
-# date, text, and number of favorites
+# date, text, and number of favorites and assign
+# the result to a new variable named data_subset
 data_subset &lt;- data_raw %&gt;%
   select(screen_name, created_at, text, 
          favorite_count, retweet_count)
 
-# Show all tweets with more than 100 favorites and 
-# assign the results to a new variable
+# Show all tweets with more than 100 favorites
 data_subset %&gt;%
   filter(favorite_count &gt; 100)
 ```
